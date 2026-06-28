@@ -63,7 +63,8 @@ class SpaceMission(BaseModel):
             raise ValueError("Must have at least one Commander or Captain")
         if not exp_check(self.crew, self.duration_days):
             raise ValueError(
-                "Long missions (> 365 days) need 50% experienced crew (5+ years)"
+                "Long missions (> 365 days) need 50% "
+                "experienced crew (5+ years)"
             )
         if not activity_check(self.crew):
             raise ValueError("All crew members must be active")
@@ -158,6 +159,18 @@ def main() -> None:
             crew=crew_list_2,
             budget_millions=2500.0,
         )
+        print(f"Mission: {mission_invalid.mission_name}")
+        print(f"ID: {mission_invalid.mission_id}")
+        print(f"Destination: {mission_invalid.destination}")
+        print(f"Duration: {mission_invalid.duration_days} days")
+        print(f"Duration: ${mission_invalid.budget_millions}M")
+        print(f"Crew size: {len(mission_invalid.crew)}")
+        print("Crew members:")
+        for member in mission_valid.crew:
+            print(
+                f"- {member.name} ({member.rank.value})"
+                f" - {member.specialization}"
+            )
     except ValidationError as e:
         print(e.errors()[0]["msg"])
 

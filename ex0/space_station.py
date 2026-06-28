@@ -52,6 +52,13 @@ def main() -> None:
             oxygen_level=92.3,
             last_maintenance=datetime(2025, 6, 28, 11, 34, 5),
         )
+        print("Valid station created:")
+        print(f"ID: {space_station_invalid.station_id}")
+        print(f"Name: {space_station_invalid.name}")
+        print(f"Crew: {space_station_invalid.crew_size} people")
+        print(f"Power: {space_station_invalid.power_level}%")
+        print(f"Oxygen: {space_station_invalid.oxygen_level}%")
+        print(f"Status: {space_station_invalid.get_operationnal()}\n")
     except ValidationError as e:
         print(e.errors()[0]["msg"])
 
