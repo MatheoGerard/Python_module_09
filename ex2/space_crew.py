@@ -31,7 +31,7 @@ def rank_check(members: list[CrewMember]) -> bool:
 def exp_check(members: list[CrewMember], duration_days: int) -> bool:
     count: int = 0
     for member in members:
-        if member.years_experience > 5:
+        if member.years_experience >= 5:
             count += 1
     if (duration_days > 365) and ((len(members) / 2) > count):
         return False
@@ -166,7 +166,7 @@ def main() -> None:
         print(f"Duration: ${mission_invalid.budget_millions}M")
         print(f"Crew size: {len(mission_invalid.crew)}")
         print("Crew members:")
-        for member in mission_valid.crew:
+        for member in mission_invalid.crew:
             print(
                 f"- {member.name} ({member.rank.value})"
                 f" - {member.specialization}"
