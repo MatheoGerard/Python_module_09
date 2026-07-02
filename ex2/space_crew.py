@@ -75,81 +75,86 @@ def main() -> None:
     print("Space Mission Crew Validation")
     print("=========================================")
     print("Valid mission created:")
-    crew_list: list[CrewMember] = [
-        CrewMember(
-            member_id="CM001",
-            name="Sarah Connor",
-            rank=Rank.COMMANDER,
-            age=42,
-            specialization="Mission Command",
-            years_experience=19,
-        ),
-        CrewMember(
-            member_id="CM002",
-            name="John Smith",
-            rank=Rank.LIEUTENANT,
-            age=36,
-            specialization="Navigation",
-            years_experience=15,
-        ),
-        CrewMember(
-            member_id="CM003",
-            name="Alice Johnson",
-            rank=Rank.OFFICIER,
-            age=28,
-            specialization="Engineering",
-            years_experience=8,
-        ),
-    ]
-    mission_valid: SpaceMission = SpaceMission(
-        mission_id="M2024_MARS",
-        mission_name="Mars Colony Establishment",
-        destination="Mars",
-        launch_date=datetime(2025, 6, 28, 11, 34, 5),
-        duration_days=900,
-        crew=crew_list,
-        budget_millions=2500.0,
-    )
-    print(f"Mission: {mission_valid.mission_name}")
-    print(f"ID: {mission_valid.mission_id}")
-    print(f"Destination: {mission_valid.destination}")
-    print(f"Duration: {mission_valid.duration_days} days")
-    print(f"Duration: ${mission_valid.budget_millions}M")
-    print(f"Crew size: {len(mission_valid.crew)}")
-    print("Crew members:")
-    for member in mission_valid.crew:
-        print(
-            f"- {member.name} ({member.rank.value}) - {member.specialization}"
+    try:
+        crew_list: list[CrewMember] = [
+            CrewMember(
+                member_id="CM001",
+                name="Sarah Connor",
+                rank=Rank.COMMANDER,
+                age=42,
+                specialization="Mission Command",
+                years_experience=19,
+            ),
+            CrewMember(
+                member_id="CM002",
+                name="John Smith",
+                rank=Rank.LIEUTENANT,
+                age=36,
+                specialization="Navigation",
+                years_experience=15,
+            ),
+            CrewMember(
+                member_id="CM003",
+                name="Alice Johnson",
+                rank=Rank.OFFICIER,
+                age=28,
+                specialization="Engineering",
+                years_experience=8,
+            ),
+        ]
+        mission_valid: SpaceMission = SpaceMission(
+            mission_id="M2024_MARS",
+            mission_name="Mars Colony Establishment",
+            destination="Mars",
+            launch_date=datetime(2025, 6, 28, 11, 34, 5),
+            duration_days=900,
+            crew=crew_list,
+            budget_millions=2500.0,
         )
+        print(f"Mission: {mission_valid.mission_name}")
+        print(f"ID: {mission_valid.mission_id}")
+        print(f"Destination: {mission_valid.destination}")
+        print(f"Duration: {mission_valid.duration_days} days")
+        print(f"Duration: ${mission_valid.budget_millions}M")
+        print(f"Crew size: {len(mission_valid.crew)}")
+        print("Crew members:")
+        for member in mission_valid.crew:
+            print(
+                f"- {member.name} ({member.rank.value}) - {member.specialization}"
+            )
+    except ValidationError as e:
+        print(e.errors()[0]["msg"])
+    except Exception as e:
+        print(e)
     print("=========================================")
     print("Expected validation error:")
-    crew_list_2: list[CrewMember] = [
-        CrewMember(
-            member_id="CM001",
-            name="Sarah Connor",
-            rank=Rank.CADETS,
-            age=42,
-            specialization="Mission Command",
-            years_experience=19,
-        ),
-        CrewMember(
-            member_id="CM002",
-            name="John Smith",
-            rank=Rank.CADETS,
-            age=36,
-            specialization="Navigation",
-            years_experience=15,
-        ),
-        CrewMember(
-            member_id="CM003",
-            name="Alice Johnson",
-            rank=Rank.OFFICIER,
-            age=28,
-            specialization="Engineering",
-            years_experience=8,
-        ),
-    ]
     try:
+        crew_list_2: list[CrewMember] = [
+            CrewMember(
+                member_id="CM001",
+                name="Sarah Connor",
+                rank=Rank.CAPTAIN,
+                age=34,
+                specialization="Mission Command",
+                years_experience=19,
+            ),
+            CrewMember(
+                member_id="CM002",
+                name="John Smith",
+                rank=Rank.CADETS,
+                age=36,
+                specialization="Navigation",
+                years_experience=15,
+            ),
+            CrewMember(
+                member_id="CM003",
+                name="Alice Johnson",
+                rank=Rank.OFFICIER,
+                age=28,
+                specialization="Engineering",
+                years_experience=8,
+            ),
+        ]
         mission_invalid: SpaceMission = SpaceMission(
             mission_id="M2024_MARS",
             mission_name="Mars Colony Establishment",
@@ -173,6 +178,8 @@ def main() -> None:
             )
     except ValidationError as e:
         print(e.errors()[0]["msg"])
+    except Exception as e:
+        print(e)
 
 
 if __name__ == "__main__":

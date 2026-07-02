@@ -66,6 +66,8 @@ def main() -> None:
         print(f"Message: {rapport.message_received}\n")
     except ValidationError as e:
         print(e.errors()[0]["msg"])
+    except Exception as e:
+        print(e)
     print("======================================")
     print("Expected validation error:")
     try:
@@ -81,6 +83,8 @@ def main() -> None:
         )
     except ValidationError as e:
         print(e.errors()[0]["msg"])
+    except Exception as e:
+        print(e)
 
 
 if __name__ == "__main__":

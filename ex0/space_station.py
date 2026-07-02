@@ -26,23 +26,28 @@ class Space_station(BaseModel):
 
 
 def main() -> None:
-    space_station: Space_station = Space_station(
-        station_id="ISS001",
-        name="International Space Station",
-        crew_size=6,
-        power_level=85.5,
-        oxygen_level=92.3,
-        last_maintenance=datetime(2025, 6, 28, 11, 34, 5),
-    )
-    print("Valid station created:")
-    print(f"ID: {space_station.station_id}")
-    print(f"Name: {space_station.name}")
-    print(f"Crew: {space_station.crew_size} people")
-    print(f"Power: {space_station.power_level}%")
-    print(f"Oxygen: {space_station.oxygen_level}%")
-    print(f"Status: {space_station.get_operationnal()}\n")
-    print("========================================")
-    print("Expected validation error:")
+    try:
+        space_station: Space_station = Space_station(
+            station_id="ISS001",
+            name="International Space Station",
+            crew_size=6,
+            power_level=85.5,
+            oxygen_level=92.3,
+            last_maintenance=datetime(2025, 6, 28, 11, 34, 5),
+        )
+        print("Valid station created:")
+        print(f"ID: {space_station.station_id}")
+        print(f"Name: {space_station.name}")
+        print(f"Crew: {space_station.crew_size} people")
+        print(f"Power: {space_station.power_level}%")
+        print(f"Oxygen: {space_station.oxygen_level}%")
+        print(f"Status: {space_station.get_operationnal()}\n")
+        print("========================================")
+        print("Expected validation error:")
+    except ValidationError as e:
+        print(e.errors()[0]["msg"])
+    except Exception as e:
+        print(e)
     try:
         space_station_invalid: Space_station = Space_station(
             station_id="ISS001",
@@ -61,6 +66,8 @@ def main() -> None:
         print(f"Status: {space_station_invalid.get_operationnal()}\n")
     except ValidationError as e:
         print(e.errors()[0]["msg"])
+    except Exception as e:
+        print(e)
 
 
 if __name__ == "__main__":
