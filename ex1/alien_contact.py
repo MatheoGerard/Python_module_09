@@ -10,7 +10,7 @@ class ContactType(Enum):
     TELEPATHIC = "telepathic"
 
 
-class ContactRapport(BaseModel):
+class AlienContact(BaseModel):
     contact_id: str = Field(min_length=5, max_length=15)
     timestamp: datetime
     location: str = Field(min_length=3, max_length=100)
@@ -22,7 +22,7 @@ class ContactRapport(BaseModel):
     is_verified: bool = False
 
     @model_validator(mode="after")
-    def validate_rules(self) -> "ContactRapport":
+    def validate_rules(self) -> "AlienContact":
         if not self.contact_id.startswith("AC"):
             raise ValueError("Contact id must start with 'AC'")
         if self.contact_type == ContactType.PHYSICAL and not self.is_verified:
@@ -45,9 +45,9 @@ def main() -> None:
     print("Alien Contact Log Validation")
     print("======================================")
     print("Valid contact report:")
-    rapport: ContactRapport | None = None
+    rapport: AlienContact | None = None
     try:
-        rapport = ContactRapport(
+        rapport = AlienContact(
             contact_id="AC_2024_001",
             timestamp=datetime(2025, 6, 28, 11, 34, 5),
             contact_type=ContactType.RADIO,
@@ -71,7 +71,7 @@ def main() -> None:
     print("======================================")
     print("Expected validation error:")
     try:
-        rapport = ContactRapport(
+        rapport = AlienContact(
             contact_id="AC_2024_001",
             timestamp=datetime(2025, 6, 28, 11, 34, 5),
             contact_type=ContactType.TELEPATHIC,

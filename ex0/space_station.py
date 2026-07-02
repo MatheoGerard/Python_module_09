@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field, ValidationError, field_validator
 from datetime import datetime
 
 
-class Space_station(BaseModel):
+class SpaceStation(BaseModel):
     station_id: str = Field(min_length=3, max_length=10)
     name: str = Field(min_length=1, max_length=50)
     crew_size: int = Field(ge=1, le=20)
